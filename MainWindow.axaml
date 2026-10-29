@@ -1,9 +1,71 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:notatnik"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d"
         x:Class="notatnik.MainWindow"
-        Title="notatnik">
-    Welcome to Avalonia!
+        Title="Notatnik"
+        Width="800"
+        Height="760"
+        MinWidth="560"
+        MinHeight="600"
+        WindowStartupLocation="CenterScreen">
+    <Grid RowDefinitions="Auto,*,Auto" Margin="28">
+        <StackPanel Spacing="8">
+            <TextBlock Text="Notatnik" FontSize="28" FontWeight="Bold" />
+            <TextBlock Text="Zapisuj pomysły i wracaj do nich, kiedy chcesz."
+                       Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" />
+        </StackPanel>
+
+        <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto,Auto,*" Margin="0,24,0,16">
+            <TextBlock Text="Tytuł" FontWeight="SemiBold" Margin="0,0,0,6" />
+            <TextBox x:Name="TitleInput"
+                     Grid.Row="1"
+                     PlaceholderText="Np. Pomysł na projekt" />
+
+            <TextBlock Grid.Row="2" Text="Treść" FontWeight="SemiBold" Margin="0,18,0,6" />
+            <TextBox x:Name="BodyInput"
+                     Grid.Row="3"
+                     AcceptsReturn="True"
+                     MinHeight="130"
+                     TextWrapping="Wrap"
+                     VerticalContentAlignment="Top"
+                     PlaceholderText="Zapisz swoją notatkę..." />
+
+            <Button Grid.Row="4"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="0,14,0,18"
+                    Padding="18,9"
+                    Content="Zapisz notatkę"
+                    Click="SaveButton_Click" />
+
+            <StackPanel Grid.Row="5" Spacing="8">
+                <TextBlock Text="Zapisane notatki" FontSize="18" FontWeight="SemiBold" />
+                <ListBox x:Name="NotesList"
+                         MaxHeight="270">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="local:Note">
+                            <Border Padding="12"
+                                    Margin="0,0,0,8"
+                                    CornerRadius="6"
+                                    Background="{DynamicResource SystemControlBackgroundAltHighBrush}">
+                                <StackPanel Spacing="6">
+                                    <TextBlock Text="{Binding Heading}" FontWeight="SemiBold" />
+                                    <TextBlock Text="{Binding Body}" TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </Grid>
+
+        <TextBlock x:Name="StatusText"
+                   Grid.Row="2"
+                   MinHeight="22"
+                   TextWrapping="Wrap"
+                   Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" />
+    </Grid>
 </Window>
